@@ -1,0 +1,5 @@
+org\apache\shardingsphere\example\sharding\spring\boot\starter\jdbc\ExampleMain.class
+org\apache\shardingsphere\example\sharding\spring\boot\starter\jdbc\repository\OrderRepository.class
+org\apache\shardingsphere\example\sharding\spring\boot\starter\jdbc\entity\Order.class
+org\apache\shardingsphere\example\sharding\spring\boot\starter\jdbc\TransactionConfiguration.class
+org\apache\shardingsphere\example\sharding\spring\boot\starter\jdbc\service\ExampleService.class

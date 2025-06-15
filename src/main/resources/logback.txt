@@ -1,0 +1,54 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.firebirdsql.jaybird.xca" level="TRACE" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <!-- Логгер для MySQL драйвера -->
+    <logger name="com.mysql.cj" level="TRACE" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <root level="INFO">
+<!--    <root level="TRACE">-->
+        <appender-ref ref="STDOUT" />
+    </root>
+
+<!--    <logger name="com.atomikos" level="DEBUG"/>-->
+
+</configuration>
+<!--Детальное Логирование-->
+<!--<configuration>-->
+<!--    &lt;!&ndash; Настройка вывода логов в консоль &ndash;&gt;-->
+<!--    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder>-->
+<!--            &lt;!&ndash; Добавляем цветовое выделение для разных уровней логов &ndash;&gt;-->
+<!--            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    &lt;!&ndash; Включение DEBUG для ShardingSphere &ndash;&gt;-->
+<!--    <logger name="org.apache.shardingsphere" level="DEBUG" additivity="false">-->
+<!--        <appender-ref ref="STDOUT" />-->
+<!--    </logger>-->
+
+<!--    &lt;!&ndash; Включение DEBUG для HikariCP &ndash;&gt;-->
+<!--    <logger name="com.zaxxer.hikari" level="DEBUG" additivity="false">-->
+<!--        <appender-ref ref="STDOUT" />-->
+<!--    </logger>-->
+
+<!--    &lt;!&ndash; Включение DEBUG для Narayana (XA-транзакции) &ndash;&gt;-->
+<!--    <logger name="com.arjuna" level="DEBUG" additivity="false">-->
+<!--        <appender-ref ref="STDOUT" />-->
+<!--    </logger>-->
+
+<!--    &lt;!&ndash; Корневой уровень логирования настроен на DEBUG &ndash;&gt;-->
+<!--    <root level="DEBUG">-->
+<!--        <appender-ref ref="STDOUT" />-->
+<!--    </root>-->
+<!--</configuration>-->

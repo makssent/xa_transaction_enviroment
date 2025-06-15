@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Консольный аппендер -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Файловый аппендер -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/app.log</file>
+        <append>false</append> <!-- Перезаписывать файл при каждом запуске -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Логгер для Firebird XA -->
+    <logger name="org.firebirdsql.jaybird.xca" level="TRACE" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <!-- Логгер для MySQL драйвера -->
+    <logger name="com.mysql.cj" level="TRACE" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <!-- Корневой логгер: пишем и в консоль, и в файл -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

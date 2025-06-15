@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Определяем свойства для контекста и кодировки -->
+    <property name="log.context.name" value="shardingsphere-example" />
+    <property name="log.charset" value="UTF-8" />
+    <property name="log.pattern" value="[%-5level] %date{ISO8601} --%thread-- [%logger] %msg%n" />
+
+    <!-- Настраиваем контекст -->
+    <contextName>${log.context.name}</contextName>
+
+    <!-- Appender для консоли -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="${log.charset}">
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender для отдельного лога OrderRepository_CreateTableIfNotExists.log -->
+    <appender name="ORDER_REPOSITORY_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>OrderRepository_CreateTableIfNotExists.log</file>
+        <append>true</append>
+        <encoder charset="${log.charset}">
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Логгер для класса OrderRepository -->
+    <logger name="org.apache.shardingsphere.example.sharding.spring.boot.starter.jdbc.repository.OrderRepository" level="DEBUG" additivity="false">
+        <appender-ref ref="ORDER_REPOSITORY_FILE" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+
+    <!-- Корневой логгер -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

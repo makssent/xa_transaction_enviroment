@@ -1,0 +1,81 @@
+======================================================================
+==============   PERFORMANCE TEST (SINGLE INSERT + BATCH INSERT + ITERATIVE UPDATE/DELETE + TRUNCATE)   ==============
+======================================================================
+---- SINGLE INSERT START ----
+SINGLE INSERT of 1000 records took 2250 ms
+---- SINGLE INSERT END ----
+---- BATCH INSERT START ----
+BATCH INSERT of 100000 records (batch size 100) took 3679 ms
+---- BATCH INSERT END ----
+---- PREPARING RECORDS FOR ITERATIVE UPDATE/DELETE ----
+Prepared 10000 records per iteration for 10 iterations
+UPDATE iteration 1/10
+Updated 10000 rows
+UPDATE iteration 1 took 69 ms
+UPDATE iteration 2/10
+Updated 10000 rows
+UPDATE iteration 2 took 57 ms
+UPDATE iteration 3/10
+Updated 10000 rows
+UPDATE iteration 3 took 63 ms
+UPDATE iteration 4/10
+Updated 10000 rows
+UPDATE iteration 4 took 50 ms
+UPDATE iteration 5/10
+Updated 10000 rows
+UPDATE iteration 5 took 42 ms
+UPDATE iteration 6/10
+Updated 10000 rows
+UPDATE iteration 6 took 43 ms
+UPDATE iteration 7/10
+Updated 10000 rows
+UPDATE iteration 7 took 45 ms
+UPDATE iteration 8/10
+Updated 10000 rows
+UPDATE iteration 8 took 42 ms
+UPDATE iteration 9/10
+Updated 10000 rows
+UPDATE iteration 9 took 43 ms
+UPDATE iteration 10/10
+Updated 10000 rows
+UPDATE iteration 10 took 45 ms
+DELETE iteration 1/10
+Deleted 10000 rows
+DELETE iteration 1 took 57 ms
+DELETE iteration 2/10
+Deleted 10000 rows
+DELETE iteration 2 took 59 ms
+DELETE iteration 3/10
+Deleted 10000 rows
+DELETE iteration 3 took 66 ms
+DELETE iteration 4/10
+Deleted 10000 rows
+DELETE iteration 4 took 62 ms
+DELETE iteration 5/10
+Deleted 10000 rows
+DELETE iteration 5 took 54 ms
+DELETE iteration 6/10
+Deleted 10000 rows
+DELETE iteration 6 took 61 ms
+DELETE iteration 7/10
+Deleted 10000 rows
+DELETE iteration 7 took 63 ms
+DELETE iteration 8/10
+Deleted 10000 rows
+DELETE iteration 8 took 59 ms
+DELETE iteration 9/10
+Deleted 10000 rows
+DELETE iteration 9 took 57 ms
+DELETE iteration 10/10
+Deleted 10000 rows
+DELETE iteration 10 took 53 ms
+TRUNCATE iteration 1/1
+TRUNCATE iteration 1 took 79 ms
+======================================================================
+FULL PERFORMANCE SUMMARY:
+SINGLE INSERT: 2250 ms
+BATCH INSERT: 3679 ms
+TOTAL UPDATE TIME (10 iterations): 499 ms
+TOTAL DELETE TIME (10 iterations): 591 ms
+TOTAL TRUNCATE TIME (1 iterations): 79 ms
+======================================================================

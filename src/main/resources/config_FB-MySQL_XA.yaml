@@ -1,0 +1,82 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+
+mode:
+  type: Standalone
+  repository:
+    type: JDBC
+#    props:
+#      path: demo
+
+dataSources:
+  ds_1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.firebirdsql.jdbc.FBDriver
+    jdbcUrl: jdbc:firebirdsql://localhost:3050/D:/sharding/Databases/SHARD1.FDB
+    username: sysdba
+    password: masterkey
+    maxPoolSize: 10
+  ds_0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/SHARD5?serverTimezone=UTC&useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&logger=com.mysql.cj.log.Slf4JLogger&profileSQL=true
+    username: root
+    password: password
+    maxPoolSize: 10
+
+
+rules:
+  - !SHARDING
+    tables:
+      T_ORDER:
+        actualDataNodes: ds_$->{0..1}.T_ORDER_$->{0..1}
+        tableStrategy:
+          standard:
+            shardingColumn: ORDER_ID
+            shardingAlgorithmName: T_ORDER_inline
+        keyGenerateStrategy:
+          column: ORDER_ID
+          keyGeneratorName: snowflake_generator
+    defaultDatabaseStrategy:
+      standard:
+        shardingColumn: USER_ID
+        shardingAlgorithmName: database_inline
+
+    shardingAlgorithms:
+      database_inline:
+        type: INLINE
+        props:
+          algorithm-expression: ds_${USER_ID % 2}
+
+      T_ORDER_inline:
+        type: INLINE
+        props:
+          algorithm-expression: T_ORDER_$->{ORDER_ID % 2}
+    keyGenerators:
+      snowflake_generator:
+        type: SNOWFLAKE
+
+transaction:
+  # defaultType: LOCAL
+  defaultType: XA
+  providerType: Atomikos
+
+
+props:
+  sql-show: true
+  transactionTimeout: 360

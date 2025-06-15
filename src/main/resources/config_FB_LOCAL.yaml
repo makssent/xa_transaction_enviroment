@@ -1,0 +1,57 @@
+mode:
+  type: Standalone
+  repository:
+    type: JDBC
+
+dataSources:
+  ds_0:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.firebirdsql.jdbc.FBDriver
+    jdbcUrl: jdbc:firebirdsql://localhost:3050/D:/sharding/Databases/SHARD1.FDB
+    username: sysdba
+    password: masterkey
+    maxPoolSize: 10
+  ds_1:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.firebirdsql.jdbc.FBDriver
+    jdbcUrl: jdbc:firebirdsql://localhost:3050/D:/sharding/Databases/SHARD2.FDB
+    username: sysdba
+    password: masterkey
+    maxPoolSize: 10
+
+rules:
+  - !SHARDING
+    tables:
+      T_ORDER:
+        actualDataNodes: ds_$->{0..1}.T_ORDER_$->{0..1}
+        tableStrategy:
+          standard:
+            shardingColumn: ORDER_ID
+            shardingAlgorithmName: T_ORDER_inline
+        keyGenerateStrategy:
+          column: ORDER_ID
+          keyGeneratorName: snowflake_generator
+    defaultDatabaseStrategy:
+      standard:
+        shardingColumn: USER_ID
+        shardingAlgorithmName: database_inline
+
+    shardingAlgorithms:
+      database_inline:
+        type: INLINE
+        props:
+          algorithm-expression: ds_${USER_ID % 2}
+
+      T_ORDER_inline:
+        type: INLINE
+        props:
+          algorithm-expression: T_ORDER_$->{ORDER_ID % 2}
+    keyGenerators:
+      snowflake_generator:
+        type: SNOWFLAKE
+
+transaction:
+  defaultType: LOCAL
+
+props:
+  sql-show: true
